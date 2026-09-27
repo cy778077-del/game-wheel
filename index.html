@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d1423">
+  <title>Lucky Loop · 我的世界粉丝转盘</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-decor" aria-hidden="true">
+    <svg viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice">
+      <g fill="#d8e9ff" opacity="0.55">
+        <rect x="90" y="70" width="150" height="30"/>
+        <rect x="130" y="46" width="70" height="26"/>
+        <rect x="1080" y="120" width="180" height="34"/>
+        <rect x="1130" y="92" width="80" height="28"/>
+        <rect x="560" y="40" width="110" height="24"/>
+        <rect x="1320" y="300" width="90" height="22"/>
+      </g>
+      <g opacity="0.4">
+        <rect x="60" y="640" width="60" height="14" fill="#6fce5a"/>
+        <rect x="60" y="654" width="60" height="46" fill="#8b5a2b"/>
+        <rect x="1300" y="560" width="70" height="16" fill="#6fce5a"/>
+        <rect x="1300" y="576" width="70" height="50" fill="#8b5a2b"/>
+        <rect x="700" y="760" width="46" height="12" fill="#6fce5a"/>
+        <rect x="700" y="772" width="46" height="36" fill="#8b5a2b"/>
+      </g>
+      <g transform="translate(1230,660) rotate(24)" opacity="0.32">
+        <rect x="0" y="-60" width="12" height="64" fill="#8cecff"/>
+        <rect x="-4" y="-64" width="20" height="8" fill="#c9f6ff"/>
+        <rect x="-16" y="4" width="44" height="10" fill="#d9b25a"/>
+        <rect x="0" y="14" width="12" height="26" fill="#6b4a2a"/>
+        <rect x="-3" y="40" width="18" height="8" fill="#6b4a2a"/>
+      </g>
+      <g transform="translate(150,520) rotate(-18)" opacity="0.28">
+        <path d="M -40 -10 Q 0 -34 40 -10 L 30 -2 Q 0 -20 -30 -2 Z" fill="#b8c2cc"/>
+        <rect x="-5" y="-6" width="10" height="70" fill="#7a5230"/>
+      </g>
+      <g transform="translate(920,700)" opacity="0.3">
+        <rect x="-16" y="-16" width="32" height="32" fill="#57d7e8" transform="rotate(45)"/>
+        <rect x="-8" y="-8" width="12" height="12" fill="#c8f4fb" transform="rotate(45)"/>
+      </g>
+      <g opacity="0.35">
+        <rect x="300" y="200" width="8" height="8" fill="#6fce5a"/>
+        <rect x="420" y="520" width="6" height="6" fill="#57d7e8"/>
+        <rect x="820" y="180" width="7" height="7" fill="#d9b25a"/>
+        <rect x="1180" y="380" width="6" height="6" fill="#6fce5a"/>
+        <rect x="560" y="680" width="8" height="8" fill="#57d7e8"/>
+        <rect x="1020" y="820" width="6" height="6" fill="#d9b25a"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="brand-lockup"><div class="brand-mark">↻</div><div><div class="brand-name">LUCKY LOOP</div><div class="brand-sub">网易《我的世界》粉丝活动</div></div></div>
+      <div class="top-meta"><span class="live-dot"></span><span>主播福利场</span></div>
+    </header>
+
+    <div class="ticker" id="winTicker" aria-label="实时中奖播报">
+      <span class="ticker-badge"><span class="live-dot"></span>LIVE</span>
+      <div class="ticker-viewport"><div id="tickerTrack" class="ticker-track"></div></div>
+    </div>
+
+    <main>
+      <section class="hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">CREATOR GIVEAWAY / 2026</div>
+          <h1>转一次，带走你的<br><em>模组与钻石</em></h1>
+          <p class="hero-desc">粉丝专属幸运转盘，8 个奖项全部可中。</p>
+          <div class="rule-pills"><span>◉ 每人 1 次</span><span>✦ 全部可中</span><span>⌛ 1 小时领奖</span></div>
+        </div>
+        <div class="hero-note"><span class="note-mark">“</span><p>感谢每一位支持我的粉丝朋友，祝你今天手气爆棚！</p><span class="note-author">— 主播粉丝回馈</span></div>
+      </section>
+
+      <section class="game-grid">
+        <div class="wheel-card card">
+          <div class="card-topline"><span class="section-label">LUCKY WHEEL</span><span id="statusLabel" class="status-label">可抽奖</span></div>
+          <div class="wheel-wrap">
+            <div class="pointer" aria-hidden="true"><span></span></div>
+            <canvas id="wheelCanvas" width="640" height="640" aria-label="粉丝幸运转盘"></canvas>
+            <div class="wheel-center"><div class="center-ring"><strong>SPIN</strong><small id="spinHint">点击抽奖</small></div></div>
+          </div>
+          <button id="spinButton" class="spin-button" type="button"><span>↻</span>开始抽奖</button>
+          <p id="spinNote" class="spin-note">每人仅限抽奖 1 次 · 好运正在加载</p>
+        </div>
+
+        <aside class="side-column">
+          <section class="card prize-card">
+            <div class="card-topline"><span class="section-label">PRIZE POOL</span><span class="prize-count">8 项奖品</span></div>
+            <h2>本轮奖项</h2>
+            <div id="prizeList" class="prize-list"></div>
+          </section>
+          <section class="card claim-card">
+            <div class="card-topline"><span class="section-label">HOW TO CLAIM</span><span class="claim-time">1 小时内</span></div>
+            <h2>中奖后这样领</h2>
+            <ol class="claim-steps"><li><b>截图</b><span>保存完整中奖结果</span></li><li><b>添加</b><span>下载 Lolo 洛洛，添加主播</span></li><li><b>私信</b><span>发领奖信息完成核验</span></li></ol>
+            <div class="lolo-id"><span>Lolo 主播 ID</span><strong>19028557</strong><button id="copyIdButton" type="button" title="复制主播 ID" aria-label="复制主播 ID">⧉</button></div>
+            <button id="copyTemplateButton" class="template-button" type="button">复制领奖格式</button>
+          </section>
+        </aside>
+      </section>
+
+      <section class="share-strip card"><div class="share-icon">↗</div><div><strong>发给你的快手朋友</strong><span>复制活动链接，打开就能参加</span></div><button id="shareButton" type="button">复制活动链接</button></section>
+
+      <section class="footer-rules"><div><span class="rule-number">01</span><span>每个快手账号仅限参与 1 次。</span></div><div><span class="rule-number">02</span><span>中奖后 1 小时内完成领取，超时作废。</span></div><div><span class="rule-number">03</span><span>领奖请准备：中奖截图、快手号、网易昵称、Lolo 昵称。</span></div></section>
+    </main>
+    <footer class="footer"><span>LUCKY LOOP · 网易《我的世界》主播活动</span><span id="clockLabel">00:00:00</span></footer>
+  </div>
+
+  <div id="resultModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
+    <div class="result-modal">
+      <button id="closeModalButton" class="close-button" type="button" aria-label="关闭">×</button>
+      <div class="result-spark">✦</div><div class="eyebrow">CONGRATULATIONS</div><h2 id="resultTitle">恭喜你抽中了</h2><div id="resultPrize" class="result-prize">—</div>
+      <div class="deadline-box"><span>领奖倒计时</span><strong id="countdownLabel">60:00</strong></div>
+      <p class="result-copy">下载 Lolo 洛洛，添加主播 ID <strong>19028557</strong>，再把下面的领奖信息发给主播。</p>
+      <button id="modalCopyButton" class="modal-primary" type="button">复制领奖信息</button><button id="modalCloseButton" class="modal-secondary" type="button">我知道了</button>
+    </div>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
